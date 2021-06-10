@@ -103,11 +103,14 @@ $LBConfigRuleName = "ILBCR_$ListenerPort"    # The Load Balancer Rule Object Nam
 $FrontEndConfigurationName = "FE_SQLAGILB_1" # Object name for the front-end configuration 
 $BackEndConfigurationName ="BE_SQLAGILB_1"   # Object name for the back-end configuration
 
+$SKU = "<Basic or Standard>"
+$Zone = "['1', '2', '3']'                    #Specify which Zones to use, ['1', '2', '3']
+
 $VNet = Get-AzVirtualNetwork -Name $VNetName -ResourceGroupName $ResourceGroupName 
 
 $Subnet = Get-AzVirtualNetworkSubnetConfig -VirtualNetwork $VNet -Name $SubnetName 
 
-$FEConfig = New-AzLoadBalancerFrontendIpConfig -Name $FrontEndConfigurationName -PrivateIpAddress $ILBIP -SubnetId $Subnet.id
+$FEConfig = New-AzLoadBalancerFrontendIpConfig -Name $FrontEndConfigurationName -PrivateIpAddress $ILBIP -SubnetId $Subnet.id -Zone $zone -Sku $SKU
 
 $BEConfig = New-AzLoadBalancerBackendAddressPoolConfig -Name $BackEndConfigurationName 
 
